@@ -14,7 +14,7 @@ async def generate_json_objects(num_objects):
         object_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
         url = f"https://example.com/{object_id}"
         text = ''.join(random.choices(string.ascii_lowercase + string.digits, k=random.randint(1000, 10000)))
-        t_type = random.choice(["type1", "type2", "type3"])
+        t_type = random.choice(["html", "pdf", "txt"])
         json_obj = {
             "_id": str(object_id),
             "url": url,
