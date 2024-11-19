@@ -78,5 +78,5 @@ if __name__ == '__main__':
     collection = db.RAW
     delete = collection.delete_many({})
 
-    json_objects = asyncio.run(generate_json_objects(1))
+    json_objects = asyncio.run(generate_json_objects(1000))
     asyncio.run(add_many(json_objects, collection))
