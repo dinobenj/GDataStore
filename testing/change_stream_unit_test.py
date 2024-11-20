@@ -16,30 +16,31 @@ def collection(mongo_client):
     return mongo_client.test.RAW
 
 def test_format_json():
-    logging.info("Running test_format_json...")
+    logging.info("Running test_format_json...") 
     change = {
-        "operationType": "insert",
-        "clusterTime": "2021-09-14T18:51:00.000Z",
-        "documentKey": "1",
-        "fullDocument": {
-            "_id": "1",
-            "url": "https://example.com/1",
-            "text_length": 1000,
-            "text": "text",
-            "type": "html"
-        }
+        '_id': 
+        {'_data': 'iur2o9uoubv3tbgsg65ps7'}, 
+        'operationType': 'insert', 
+        'clusterTime': "Timestamp(1732081619, 1)", 'wallTime': "datetime.datetime(2024, 11, 20, 5, 46, 59, 470000)", 
+        'fullDocument': {
+            '_id': 'l8je93o2kzkrv3tbgsg65ps7', 
+            'url': 'https://example.com/l8je93o2kzkrv3tbgsg65ps7', 
+            'text_length': 7, 'text': 'jwjvboa', 'type': 'txt'}, 
+            'ns': {'db': 'test', 'coll': 'RAW'}, 
+            'documentKey': {'_id': 'l8je93o2kzkrv3tbgsg65ps7'}
     }
+        
     json_object = asyncio.run(format_json(change))
     assert json_object == {
         "operationType": "insert",
-        "clusterTime": "2021-09-14T18:51:00.000Z",
-        "documentKey": "1",
+        "clusterTime": "Timestamp(1732081619, 1)",
+        "documentKey": 'l8je93o2kzkrv3tbgsg65ps7',
         "fullDocument": {
-            "_id": "1",
-            "url": "https://example.com/1",
-            "text_length": 1000,
-            "text": "text",
-            "type": "html"
+            "_id": "l8je93o2kzkrv3tbgsg65ps7",
+            "url": "https://example.com/l8je93o2kzkrv3tbgsg65ps7",
+            "text_length": 7,
+            "text": "jwjvboa",
+            "type": "txt"
         }
     }
     logging.info("test_format_json passed.")

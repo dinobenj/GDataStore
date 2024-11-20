@@ -5,6 +5,7 @@ import json
 import asyncio
 import requests
 async def format_json(change):
+    print(change)
     change_type = change['operationType']
     cluster_time = change['clusterTime']
     object_id = change['documentKey']['_id']
@@ -65,7 +66,6 @@ def main():
     print("Listening...")
     db = client.test
     collection = db.RAW
-    #collection.delete_many({}) 
 
     try:
         with collection.watch([{"$match": {"operationType": {"$in": ["insert", "update", "delete"]}}}]) as change_stream:
