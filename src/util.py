@@ -6,6 +6,7 @@ import asyncio
 import requests
 import random
 import string
+from change_stream import format_json
 
 async def generate_json_objects(num_objects):
     json_objects = []
@@ -28,26 +29,17 @@ async def generate_json_objects(num_objects):
 
 async def add_one(json_obj: dict, collection):
     try:
-        result = await collection.insert_one(json_obj)
+        result = collection.insert_one(json_obj)
         logging.info(f"Added document with id: {result.inserted_id}")
     except PyMongoError as e:
         logging.error(f"Error adding document: {e}")
 
-async def add_many(json_objects, collection):
+async def add_many(json_objects, collection) -> None:
     try:
         result = collection.insert_many(json_objects)
         logging.info(f"Added {len(result.inserted_ids)} documents.")
-        print(f"Added {len(result.inserted_ids)} documents.")
     except PyMongoError as e:
         logging.error(f"Error adding documents: {e}")
-
-
-async def addData(page_data:string, page_id:string, collection) -> None:
-    try:
-        result = await collection.insert_one({"page_id": page_id, "page_data": page_data})
-        logging.info(f"Added document with id: {result.inserted_id}")
-    except PyMongoError as e:
-        logging.error(f"Error adding document: {e}")
 
 async def notifyQuery(new_document_ids: list) -> None:
     try:
@@ -57,8 +49,8 @@ async def notifyQuery(new_document_ids: list) -> None:
 
 async def removeData(url: string, collection) -> None:
     try:
-        result = await collection.delete_one({"url": url})
-        logging.info(f"Removed document with id: {result.deleted_id}")
+        result = collection.delete_one({"url": url})
+        logging.info(f"Removed document with id: {result.deleted_count}")
     except PyMongoError as e:
         logging.error(f"Error removing document: {e}")
 async def updateRawData(url: string, new_data: string, collection) -> None:
@@ -73,9 +65,9 @@ async def updateRawData(url: string, new_data: string, collection) -> None:
 
 if __name__ == '__main__':
     client = MongoClient("mongodb://localhost:27017")
-    print("Listening...")
     db = client.test
     collection = db.RAW
 
     json_objects = asyncio.run(generate_json_objects(1))
-    asyncio.run(add_many(json_objects, collection))
+    print(json_objects)
+    #asyncio.run(add_many(json_objects, collection))
