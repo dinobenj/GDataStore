@@ -76,7 +76,6 @@ if __name__ == '__main__':
     print("Listening...")
     db = client.test
     collection = db.RAW
-    delete = collection.delete_many({})
 
     json_objects = asyncio.run(generate_json_objects(1))
     asyncio.run(add_many(json_objects, collection))

@@ -65,7 +65,7 @@ def main():
     print("Listening...")
     db = client.test
     collection = db.RAW
-    collection.delete_many({}) 
+    #collection.delete_many({}) 
 
     try:
         with collection.watch([{"$match": {"operationType": {"$in": ["insert", "update", "delete"]}}}]) as change_stream:
