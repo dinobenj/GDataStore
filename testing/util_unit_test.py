@@ -110,5 +110,7 @@ def test_removeData(collection):
     url = collection.find_one({})["url"]
     asyncio.run(removeData(url, collection))
     assert collection.count_documents({}) == 0
+    with pytest.raises(AttributeError):
+        asyncio.run(removeData(1, "BAD"))
     logging.info("test_removeData passed.")
 
