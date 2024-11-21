@@ -9,7 +9,7 @@ import logging
 
 @pytest.fixture
 def client():
-    """Fixture for the Flask test client."""
+    """Test Client for the flask test suite."""
     with app.test_client() as client:
         yield client
 
