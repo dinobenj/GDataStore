@@ -43,6 +43,8 @@ def test_generate_json_objects():
     assert 'url' in json_objects[0]
     assert 'type' in json_objects[0]
     assert 'text_length' in json_objects[0]
+    with pytest.raises(TypeError):
+        asyncio.run(generate_json_objects("1"))
     logging.info("test_generate_json_objects passed.")
 
 def test_add_many(collection):
