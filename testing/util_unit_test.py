@@ -66,6 +66,9 @@ def test_add_many(collection):
     json_objects = asyncio.run(generate_json_objects(1))
     asyncio.run(add_many(json_objects, collection))
     assert collection.count_documents({}) == 1
+    with pytest.raises(AttributeError):
+        asyncio.run(add_many(1, "BAD"))
+        logging.info("test_add_many fail case passed.")
     logging.info("test_add_many passed.")
 
 def test_notifyQuery(collection):

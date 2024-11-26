@@ -34,7 +34,7 @@ async def add_one(json_obj: dict, collection):
     except PyMongoError as e:
         logging.error(f"Error adding document: {e}")
 
-async def add_many(json_objects, collection) -> None:
+async def add_many(json_objects: list, collection) -> None:
     try:
         result = collection.insert_many(json_objects)
         logging.info(f"Added {len(result.inserted_ids)} documents.")
