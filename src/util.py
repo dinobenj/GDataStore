@@ -7,7 +7,8 @@ import requests
 import random
 import string
 from change_stream import format_json
-
+import os
+from dotenv import load_dotenv 
 async def generate_json_objects(num_objects):
     json_objects = []
     for _ in range(num_objects):
@@ -64,10 +65,10 @@ async def updateRawData(url: string, new_data: string, collection) -> None:
 
 
 if __name__ == '__main__':
-    client = MongoClient("mongodb://localhost:27017")
+    load_dotenv()
+    client = MongoClient(os.getenv("MONGO_URI"))
     db = client.test
     collection = db.RAW
-
-    json_objects = asyncio.run(generate_json_objects(1))
-    print(json_objects)
+    json_objects = asyncio.run(generate_json_objects(5))
+    #print(json_objects)
     asyncio.run(add_many(json_objects, collection))

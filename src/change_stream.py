@@ -4,6 +4,9 @@ import logging
 import json
 import asyncio
 import requests
+import os
+from dotenv import load_dotenv
+
 async def format_json(change):
     print(change)
     change_type = change['operationType']
@@ -62,7 +65,8 @@ async def send_to_insert_receiver(change, change_type):
             logging.error(f"Error sending data to receiver: {e}")
 
 def main():
-    client = MongoClient("mongodb://localhost:27017")
+    load_dotenv()
+    client = MongoClient(os.getenv("MONGO_URI"))
     print("Listening...")
     db = client.test
     collection = db.RAW
