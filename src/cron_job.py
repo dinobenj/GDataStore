@@ -22,7 +22,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}")
 
-    db = pymongo.MongoClient.test
+    db = pymongo.MongoClient(os.getenv("MONGO_URI"))
     raw_collection = db.RAW
     transformed_collection = db.TRANSFORMED
     print("Starting cron job...")
