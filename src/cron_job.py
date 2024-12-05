@@ -16,13 +16,15 @@ def send_to_evaluator(json_object):
 
 def main():
     load_dotenv()
+    print(os.getenv("MONGO_URI"))
     MongoClient = pymongo.MongoClient(os.getenv("MONGO_URI"))
+
     db = MongoClient.test
     raw_collection = db.RAW
     transformed_collection = db.TRANSFORMED
     print("Starting cron job...")
-    raw_documents = raw_collection.count_documents([""])
-    transformed_documents = transformed_collection.count_documents([""])
+    raw_documents = raw_collection.count_documents({})
+    transformed_documents = transformed_collection.count_documents({})
     print(f"RAW collection has {raw_documents} documents")
     print(f"TRANSFORMED collection has {transformed_documents} documents")
     send_to_evaluator({"raw_documents": raw_documents, "transformed_documents": transformed_documents})
