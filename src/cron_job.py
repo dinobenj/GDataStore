@@ -16,10 +16,13 @@ def send_to_evaluator(json_object):
 
 def main():
     load_dotenv()
-    print(os.getenv("MONGO_URI"))
-    MongoClient = pymongo.MongoClient(os.getenv("MONGO_URI"))
+    try:
+        client = pymongo.MongoClient(os.getenv("MONGO_URI"))
+        print(client.list_database_names())  # List databases to verify connection
+    except Exception as e:
+        print(f"Error: {e}")
 
-    db = MongoClient.test
+    db = pymongo.MongoClient.test
     raw_collection = db.RAW
     transformed_collection = db.TRANSFORMED
     print("Starting cron job...")
