@@ -22,15 +22,16 @@ def main():
     except Exception as e:
         print(f"Error: {e}")
 
-    db = pymongo.MongoClient(os.getenv("MONGO_URI"))
-    raw_collection = db.RAW
-    transformed_collection = db.TRANSFORMED
+    client = pymongo.MongoClient(os.getenv("MONGO_URI"))
     print("Starting cron job...")
-    raw_documents = raw_collection.count_documents({})
-    transformed_documents = transformed_collection.count_documents({})
-    print(f"RAW collection has {raw_documents} documents")
-    print(f"TRANSFORMED collection has {transformed_documents} documents")
-    send_to_evaluator({"raw_documents": raw_documents, "transformed_documents": transformed_documents})
+    db = client.test
+    raw_collection = db.test.RAW
+    transformed_collection = db.TRANSFORMED
+    raw_collection_count = raw_collection.count_documents({})
+    print(f"Number of documents in RAW collection: {raw_collection_count}")
+    transformed_collection_count = transformed_collection.count_documents({})
+    print(f"Number of documents in TRANSFORMED collection: {transformed_collection_count}")
+    send_to_evaluator({"raw_collection_count": raw_collection_count, "transformed_collection_count": transformed_collection_count})
 
 if __name__ == '__main__':
     main()
