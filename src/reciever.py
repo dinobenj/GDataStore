@@ -28,5 +28,13 @@ def raw_delete_receive():
     print("gonna send this info somewhere...")
     return jsonify(response), 200
 
+@app.route('/TRANSFORMED_receiver', methods=['POST'])
+def transformed_receive():
+    data = request.json  
+    print("Received JSON data:", data)
+    response = {"status": "success", "message": "Transformed Data received successfully"}
+    print("gonna send this info somewhere...")
+    return jsonify(response), 200
+
 if __name__ == '__main__':
     app.run(port=5000)
