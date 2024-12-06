@@ -12,7 +12,7 @@ async def format_json(change):
     change_type = change['operationType']
     cluster_time = change['clusterTime']
     object_id = change['documentKey']['_id']
-    url = change['fullDocument']['url'] if 'fullDocument' in change else None
+    url = change['fullDocument']['url'] if 'fullDocument' in change and 'url' in 'fullDocument' else None
     text = change['fullDocument']['text'] if 'fullDocument' in change else None
     t_type = change['fullDocument']['type'] if 'fullDocument' in change else None
     json_object = {
