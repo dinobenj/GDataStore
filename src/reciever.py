@@ -62,4 +62,4 @@ def transformed_delete_receive():
 
 if __name__ == '__main__':
     load_dotenv()
-    app.run(port=5000)
+    app.run(host=f"{os.getenv("DDS_ENDPOINT")}", port=5000)
