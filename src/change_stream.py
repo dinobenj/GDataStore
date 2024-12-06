@@ -35,7 +35,8 @@ async def send_to_insert_receiver(change, change_type):
         print("Insert detected")
         try:
             json_object = await format_json(change)
-            print(f"Sending object with internal '_id' {json_object["fullDocument"]["_id"]} to receiver...")
+            internal_id = json_object["fullDocument"]["_id"]
+            print(f"Sending object with internal '_id' {internal_id} to receiver...")
             json_object = json.dumps(json_object, indent=2, default=str)
 
             response = requests.post("http://localhost:5000/RAW_insert_receiver", json=json_object)
@@ -46,7 +47,8 @@ async def send_to_insert_receiver(change, change_type):
         try:
             print("Update detected")
             json_object = await format_json(change)
-            print(f"Sending object with internal '_id' {json_object["fullDocument"]["_id"]} to receiver...")
+            internal_id = json_object["fullDocument"]["_id"]
+            print(f"Sending object with internal '_id' {internal_id} to receiver...")
             json_object = json.dumps(json_object, indent=2, default=str)
             response = requests.post("http://localhost:5000/RAW_update_receiver", json=json_object)
             print("Response from receiver:", response.json())
@@ -57,7 +59,8 @@ async def send_to_insert_receiver(change, change_type):
         try:
             print("Delete detected")
             json_object = await format_json(change)
-            print(f"Sending object with internal '_id' {json_object["documentKey"]} to receiver...")
+            internal_id = json_object["documentKey"]
+            print(f"Sending object with internal '_id' {internal_id} to receiver...")
             json_object = json.dumps(json_object, indent=2, default=str)
             response = requests.post("http://localhost:5000/RAW_delete_receiver", json=json_object)
             print("Response from receiver:", response.json())
