@@ -13,7 +13,8 @@ def raw__insert_receive():
     print("Sending to Transformation...")
     response = {"status": "success", "message": "Raw Data received successfully"}
     print("gonna send this info to transformation endpoint...")
-    requests.post(os.getenv("TEXT_TRANSFORMATION_ENDPOINT") + "newDocument", json=data)
+    endpoint = os.getenv("TEXT_TRANSFORMATION_ENDPOINT") + "newDocument"
+    response = requests.post(endpoint, json=data)
     return jsonify(response), 200
 
 @app.route('/RAW_update_receiver', methods=['POST'])
