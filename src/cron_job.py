@@ -10,7 +10,7 @@ def send_to_evaluator(json_object):
     try:
         print("Sending object to evaluator...")
         response = requests.post(os.getenv("EVALUATION_ENDPOINT"), json=json_object)
-        print("Response from evaluator:", response.json())
+        print("Response from evaluator:", response)
     except requests.exceptions.RequestException as e:
         print(f"Error sending data to evaluator: {e}")
 
