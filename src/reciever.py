@@ -36,11 +36,27 @@ def raw_delete_receive():
     print("gonna send this info somewhere...")
     return jsonify(response), 200
 
-@app.route('/TRANSFORMED_receiver', methods=['POST'])
+@app.route('/TRANSFORMED_insert_receiver', methods=['POST'])
 def transformed_receive():
     data = request.json  
     print("Received JSON data:", data)
     response = {"status": "success", "message": "Transformed Data received successfully"}
+    print("gonna send this info somewhere...")
+    return jsonify(response), 200
+
+@app.route('/TRANSFORMED_update_receiver', methods=['POST'])
+def transformed_receive():
+    data = request.json  
+    print("Received JSON data:", data)
+    response = {"status": "success", "message": "Transformed Data updated successfully"}
+    print("gonna send this info somewhere...")
+    return jsonify(response), 200
+
+@app.route('/TRANSFORMED_delete_receiver', methods=['POST'])
+def transformed_receive():
+    data = request.json  
+    print("Received JSON data:", data)
+    response = {"status": "success", "message": "Transformed Data deleted successfully"}
     print("gonna send this info somewhere...")
     return jsonify(response), 200
 
