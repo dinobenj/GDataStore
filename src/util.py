@@ -6,7 +6,7 @@ import asyncio
 import requests
 import random
 import string
-from change_stream import format_json
+from change_stream_raw import format_json
 import os
 from dotenv import load_dotenv 
 async def generate_json_objects(num_objects):
