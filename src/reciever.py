@@ -4,6 +4,7 @@ from pymongo.errors import PyMongoError
 import requests
 from dotenv import load_dotenv
 import os
+from json import loads
 app = Flask(__name__)
 
 @app.route('/RAW_insert_receiver', methods=['POST'])
@@ -14,8 +15,11 @@ def raw__insert_receive():
     response = {"status": "success", "message": "Raw Data received successfully"}
     print("gonna send this info to transformation endpoint...")
     endpoint = os.getenv("TEXT_TRANSFORMATION_ENDPOINT") + "/newDocument"
-    response = requests.post(endpoint, json=data)
-    return jsonify(response), 200
+    data_dict = loads(data)
+    doc_id = data_dict["fullDocument"]["_id"]
+    d = {"document_id": doc_id}
+    response = requests.post(endpoint, json=d)
+    return response.text, 200
 
 @app.route('/RAW_update_receiver', methods=['POST'])
 def raw_update_receive():
