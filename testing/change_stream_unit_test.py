@@ -2,7 +2,7 @@ import pytest
 import sys
 import os
 sys.path.append(os.path.abspath("../src"))
-from change_stream import format_json, send_to_insert_receiver
+from change_stream_raw import format_json, send_to_insert_receiver
 from mongomock import MongoClient
 import asyncio
 import logging
