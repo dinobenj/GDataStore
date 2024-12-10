@@ -5,6 +5,7 @@ import requests
 from dotenv import load_dotenv
 import os
 from json import loads
+import datetime
 app = Flask(__name__)
 
 @app.route('/RAW_insert_receiver', methods=['POST'])
@@ -14,12 +15,17 @@ def raw__insert_receive():
     print("Sending to Transformation...")
     response = {"status": "success", "message": "Raw Data received successfully"}
     print("gonna send this info to transformation endpoint...")
-    endpoint = os.getenv("TEXT_TRANSFORMATION_ENDPOINT") + "/newDocument"
+    transform_endpoint = os.getenv("TEXT_TRANSFORMATION_ENDPOINT") + "/newDocument"
     data_dict = loads(data)
     doc_id = data_dict["fullDocument"]["_id"]
     d = {"document_id": doc_id}
-    response = requests.post(endpoint, json=d)
-    return response.text, 200
+    indexing_d = {"document_id" : doc_id, "operation": "add", "timestamp": datetime.datetime.now()}
+    transform_response = requests.post(transform_endpoint, json=d)
+    print("gonna send this info to indexing endpoint...")
+    index_endpoint = os.getenv("INDEXING_ENDPOINT") + "/index/ping"
+    index_response = requests.post(index_endpoint, json=d)
+
+    return response.text,index_response, 200
 
 @app.route('/RAW_update_receiver', methods=['POST'])
 def raw_update_receive():
