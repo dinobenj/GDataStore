@@ -25,7 +25,7 @@ def raw__insert_receive():
     index_endpoint = os.getenv("INDEXING_ENDPOINT") + "/index/ping"
     index_response = requests.post(index_endpoint, json=d)
 
-    return response.text,index_response, 200
+    return response, index_response, 200
 
 @app.route('/RAW_update_receiver', methods=['POST'])
 def raw_update_receive():
