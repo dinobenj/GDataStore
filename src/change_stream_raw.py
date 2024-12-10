@@ -38,7 +38,7 @@ async def send_to_insert_receiver(change, change_type):
             internal_id = json_object["fullDocument"]["_id"]
             print(f"Sending object with internal '_id' {internal_id} to receiver...")
             json_object = json.dumps(json_object, indent=2, default=str)
-
+            print(json_object)
             response = requests.post("http://localhost:5000/RAW_insert_receiver", json=json_object)
             print("Response from receiver:", response.json())
         except requests.exceptions.RequestException as e:
