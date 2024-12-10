@@ -19,7 +19,7 @@ def raw__insert_receive():
     data_dict = loads(data)
     doc_id = data_dict["fullDocument"]["_id"]
     d = {"document_id": doc_id}
-    indexing_d = {"document_id" : doc_id, "operation": "add", "timestamp": datetime.datetime.now()}
+    indexing_d = {"document_id" : doc_id, "operation": "add", "timestamp": str(datetime.datetime.now())}
     transform_response = requests.post(transform_endpoint, json=d)
     print("gonna send this info to indexing endpoint...")
     index_endpoint = os.getenv("INDEXING_ENDPOINT") + "/index/ping"
