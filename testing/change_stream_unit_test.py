@@ -3,6 +3,7 @@ import sys
 import os
 sys.path.append(os.path.abspath("../src"))
 from change_stream_raw import format_json, send_to_insert_receiver
+from change_stream_transformed import send_to_insert_receiver as send_to_insert_receiver_transformed
 from mongomock import MongoClient
 import asyncio
 import logging
@@ -54,7 +55,7 @@ def test_format_json():
         "documentKey": 'l8je93o2kzkrv3tbgsg65ps7',
         "fullDocument": {
             "_id": "l8je93o2kzkrv3tbgsg65ps7",
-            "url": "https://example.com/l8je93o2kzkrv3tbgsg65ps7",
+            "url": None,
             "text_length": 7,
             "text": "jwjvboa",
             "type": "txt"
@@ -96,3 +97,20 @@ def test_send_to_update_receiver(collection):
     asyncio.run(send_to_insert_receiver(change, 'update'))
     logging.info("test_send_to_update_receiver passed.")
 
+def test_transformed_send_to_insert_reciever(collection):
+    logging.info("Running test_transformed_send_to_update_receiver...")
+    change = {
+        '_id': 
+        {'_data': 'iur2o9uoubv3tbgsg65ps7'}, 
+        'operationType': 'update', 
+        'clusterTime': "Timestamp(1732081619, 1)", 'wallTime': "datetime.datetime(2024, 11, 20, 5, 46, 59, 470000)", 
+        'fullDocument': {
+            '_id': 'l8je93o2kzkrv3tbgsg65ps7', 
+            'url': 'https://example.com/l8je93o2kzkrv3tbgsg65ps7', 
+            'text_length': 7, 'text': 'jwjvboa', 'type': 'txt'}, 
+            'ns': {'db': 'test', 'coll': 'TRANSFORMED'}, 
+            'documentKey': {'_id': 'l8je93o2kzkrv3tbgsg65ps7'}
+    }
+    asyncio.run(send_to_insert_receiver_transformed (change))
+    
+    logging.info("test_transformed_send_to_update_receiver passed.")
