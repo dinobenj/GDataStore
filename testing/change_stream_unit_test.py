@@ -111,6 +111,6 @@ def test_transformed_send_to_insert_reciever(collection):
             'ns': {'db': 'test', 'coll': 'TRANSFORMED'}, 
             'documentKey': {'_id': 'l8je93o2kzkrv3tbgsg65ps7'}
     }
-    asyncio.run(send_to_insert_receiver_transformed (change))
+    asyncio.run(send_to_insert_receiver_transformed (change, 'insert'))
     
     logging.info("test_transformed_send_to_update_receiver passed.")
